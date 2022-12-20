@@ -4,7 +4,7 @@
 #ENTRYPOINT ["java", "-jar", "giftcards-0.0.1-SNAPSHOT.jar"]
 
 
-FROM maven:3.8.4-openjdk-8 as maven-builder
+FROM maven:3.8.4-openjdk-1.8 as maven-builder
 COPY src /app/src
 COPY pom.xml /app
 
