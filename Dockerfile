@@ -5,7 +5,7 @@
 #
 
 FROM adoptopenjdk/openjdk8:alpine-jre
-ARG giftcards=*.jar
+ARG JAR_FILE=*.jar
 COPY giftcards-0.0.1-SNAPSHOT.jar /giftcards-0.0.1-SNAPSHOT.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 
