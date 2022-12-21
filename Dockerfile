@@ -1,5 +1,5 @@
 FROM openjdk:8
-COPY giftcards-0.0.1-SNAPSHOT.jar /giftcards-0.0.1-SNAPSHOT.jar
+COPY giftcards-0.0.1-SNAPSHOT.jar giftcards-0.0.1-SNAPSHOT.jar
 ENTRYPOINT [ "java","-jar","giftcards-0.0.1-SNAPSHOT.jar" ]
 
 
