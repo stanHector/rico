@@ -4,7 +4,7 @@ FROM adoptopenjdk:8-jre-hotspot
 #COPY ${JAR_FILE} giftcards-0.0.1-SNAPSHOT.jar
 #ENTRYPOINT ["java", "-jar", "./target/giftcards-0.0.1-SNAPSHOT.jar"]
 WORKDIR /app
-COPY ./target/giftcards-0.0.1-SNAPSHOT.jar /app
+COPY ./target/target/giftcards-0.0.1-SNAPSHOT.jar /app
 
 EXPOSE 8080
 
