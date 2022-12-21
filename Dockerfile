@@ -1,5 +1,5 @@
 FROM openjdk:8
-ADD target/giftcards-0.0.1-SNAPSHOT.jar giftcards-0.0.1-SNAPSHOT.jar
+COPY target/giftcards-0.0.1-SNAPSHOT.jar giftcards-0.0.1-SNAPSHOT.jar
 EXPOSE 8085
 ENTRYPOINT ["java", "-jar", "giftcards-0.0.1-SNAPSHOT.jar"]
 
