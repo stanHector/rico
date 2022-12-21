@@ -1,29 +1,11 @@
 version: '2'
 
-  volumes:
-    - /my/project/dir:/app
-
 services:
-
   app:
     image: 'docker-spring-boot-postgres:latest'
     build:
       context: ""
-      dockerfile: Dockerfile
-      spring:
-        container_name: app
-      links:
-        - db:db1
-        - db2:db2
-      depends_on:
-        - db
-        - db2
-      expose:
-        - "8081"
-      ports:
-        - "8081:8081"
-      restart: always
-
+    container_name: app
     depends_on:
       - db
     environment:
