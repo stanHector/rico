@@ -1,22 +1,19 @@
-version: '2'
-
+version: '3'
 services:
-  app:
-    image: 'docker-spring-boot-postgres:latest'
-    build:
-      context: ""
-    container_name: app
+  postgresqldb:
+    image: postgresql
+    container_name: postgresqldb
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rico
+  springboot-postgresql-container:
+    image: springboot-postgresql
+    container_name: springboot-postgresql-container
+    ports:
+      - 8080:8080
+    build: ./
     depends_on:
-      - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=compose-postgres
-      - SPRING_DATASOURCE_PASSWORD=compose-postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-
-  db:
-    image: 'postgres:13.1-alpine'
-    container_name: db
-    environment:
-      - POSTGRES_USER=compose-postgres
-      - POSTGRES_PASSWORD=compose-postgres
+      - postgresqldb
