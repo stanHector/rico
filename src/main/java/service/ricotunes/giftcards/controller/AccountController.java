@@ -10,6 +10,7 @@ import service.ricotunes.giftcards.exception.AccountExistsException;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Account;
 import service.ricotunes.giftcards.repository.AccountRepository;
+import service.ricotunes.giftcards.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class AccountController {
 
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
 
     //get all accounts
@@ -42,15 +44,20 @@ public class AccountController {
 //        return new ResponseEntity(accountRepository.findAll(), HttpStatus.OK);
 //    }
 
-    //get user by Id
+//    //get user by Id
+//    @GetMapping("/account/user/{userId}")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    public ResponseEntity<Account> getUserById(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+//        Account account = accountRepository.findByUserId(userId);
+//        if (account == null) {
+//            throw new ResourceNotFoundException("Account not found for this userId: " + userId);
+//        }
+//        return ResponseEntity.ok().body(account);
+//    }
+
     @GetMapping("/account/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<Account> getUserById(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
-        Account account = accountRepository.findByUserId(userId);
-        if (account == null) {
-            throw new ResourceNotFoundException("Account not found for this userId: " + userId);
-        }
-        return ResponseEntity.ok().body(account);
+    public List<Account> getAccountByUserId(@PathVariable Long userId) {
+        return accountRepository.getAllByUserId(userId);
     }
 
 
@@ -121,7 +128,7 @@ public class AccountController {
         return response;
     }
 
-    //delete an account by userId
+//    delete an account by userId
     @DeleteMapping("/account/bank/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Map<String, Boolean> deleteUserBankAccount(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {

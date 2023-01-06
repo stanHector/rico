@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name="cardTransactions")
-public class CardTransactions {
+@Table(name="transactions")
+public class Transactions {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -15,13 +15,14 @@ public class CardTransactions {
     private double amount;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "cardTransactions_giftCard",
-            joinColumns = @JoinColumn(name = "cardTransactions_id", referencedColumnName = "id"),
+    @JoinTable(name = "transactions_giftCard",
+            joinColumns = @JoinColumn(name = "transactions_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"))
     private GiftCard giftCard;
 
 //   private  List<String> stringList;
     private Long userId;
+
     private String status;
 
 }

@@ -21,62 +21,63 @@ import service.ricotunes.giftcards.serviceImpl.CustomUserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		securedEnabled = true,
-		jsr250Enabled = true,
-		prePostEnabled = true)
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	private final CustomUserDetailsServiceImpl customUserDetailsService;
-	private final JwtAuthenticationEntryPoint unauthorizedHandler;
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomUserDetailsServiceImpl customUserDetailsService;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
-//    @Autowired
-	public SecurityConfig(CustomUserDetailsServiceImpl customUserDetailsService,
-						  JwtAuthenticationEntryPoint unauthorizedHandler, JwtAuthenticationFilter jwtAuthenticationFilter) {
-		this.customUserDetailsService = customUserDetailsService;
-		this.unauthorizedHandler = unauthorizedHandler;
-		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-	}
+    //    @Autowired
+    public SecurityConfig(CustomUserDetailsServiceImpl customUserDetailsService,
+                          JwtAuthenticationEntryPoint unauthorizedHandler, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-		http.cors().and().csrf().disable()
-				.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/v1/otp/{phone}").permitAll()
-				.antMatchers(HttpMethod.PUT,"/api/v1/otp/verify/{phone}/{otp}").permitAll()
-				.antMatchers(HttpMethod.PUT,"/api/v1/otp/verify/{phone}").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-				.antMatchers(HttpMethod.GET,"/api/v1/swagger-ui.html").permitAll()
-				.anyRequest().authenticated();
+        http.cors().and().csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/otp/{phone}").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/v1/otp/verify/{phone}/{otp}").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/v1/otp/verify/{phone}").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/swagger-ui.html").permitAll()
+                .anyRequest().authenticated();
 
-		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-	}
+    }
 
 
-	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(customUserDetailsService)
-				.passwordEncoder(passwordEncoder());
-	}
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
-	@Bean(BeanIds.AUTHENTICATION_MANAGER)
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 //	@Override
 //	public void configure(WebSecurity registry) {

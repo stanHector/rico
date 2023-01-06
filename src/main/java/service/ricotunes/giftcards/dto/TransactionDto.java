@@ -3,7 +3,7 @@ package service.ricotunes.giftcards.dto;
 import lombok.Data;
 
 @Data
-public class CardTransactionDto {
+public class TransactionDto {
     private long id;
     private double quantity;
     private double amount;

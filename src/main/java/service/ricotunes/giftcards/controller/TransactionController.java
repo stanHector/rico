@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import service.ricotunes.giftcards.dto.CardTransactionDto;
+import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
-import service.ricotunes.giftcards.model.CardTransactions;
-import service.ricotunes.giftcards.repository.CardTransactionRepository;
+import service.ricotunes.giftcards.model.Transactions;
+import service.ricotunes.giftcards.repository.TransactionRepository;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -18,52 +18,49 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")
-public class CardTransactionController {
-    private final CardTransactionRepository cardTransactionRepository;
+public class TransactionController {
+    private final TransactionRepository transactionRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
-    List<CardTransactions> getCardTransactions() {
-        return cardTransactionRepository.findAll();
-    }
+    List<Transactions> getCardTransactions() {
+        return transactionRepository.findAll();
 
-
-    @GetMapping("transactions/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<CardTransactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
-        CardTransactions cardTransactions = cardTransactionRepository.findByUserId(userId);
-        if (cardTransactions == null) {
-            throw new ResourceNotFoundException("Transaction not found for this userId: " + userId);
-        }
-        return ResponseEntity.ok().body(cardTransactions);
     }
 
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<Object> createCardTransaction(@Valid @RequestBody CardTransactions cardTransactions) {
+    public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
 
-        double cardQuantity = cardTransactions.getQuantity();
+        double cardQuantity = transactions.getQuantity();
         System.out.println("Quantity:: " + cardQuantity);
-        double buyingRate = cardTransactions.getGiftCard().getRate();
+        double buyingRate = transactions.getGiftCard().getRate();
         System.out.println("Buying Rate: " + buyingRate);
         double totalAmount = buyingRate * cardQuantity;
-        cardTransactions.setAmount(totalAmount);
-        return new ResponseEntity<>(cardTransactionRepository.save(cardTransactions), HttpStatus.OK);
+        transactions.setAmount(totalAmount);
+        return new ResponseEntity<>(transactionRepository.save(transactions), HttpStatus.OK);
     }
 
     //update an account
     @PutMapping("transaction/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public CardTransactions updateCardTransaction(@PathVariable("id") Long id, @Valid @RequestBody CardTransactionDto cardTransactionDto) throws
+    public Transactions updateCardTransaction(@PathVariable("id") Long id, @Valid @RequestBody TransactionDto transactionDto) throws
             ResourceNotFoundException {
         System.out.println("Update Card Transaction with ID = " + id + "...");
-        CardTransactions cardTransactions = cardTransactionRepository.findById(id)
+        Transactions transactions = transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card Transactions not found for this id: " + id));
-        cardTransactions.setStatus(cardTransactionDto.getStatus());
-        final CardTransactions updatedCardTransactions = cardTransactionRepository.save(cardTransactions);
-        System.out.println("Updated CardTransactions " + updatedCardTransactions);
-        return cardTransactionRepository.save(updatedCardTransactions);
+        transactions.setStatus(transactionDto.getStatus());
+        final Transactions updatedTransactions = transactionRepository.save(transactions);
+        System.out.println("Updated CardTransactions " + updatedTransactions);
+        return transactionRepository.save(updatedTransactions);
     }
+
+
+    @GetMapping("transactions/user/{userId}")
+    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) {
+        return transactionRepository.getAllByUserId(userId);
+    }
+
 
     //transfer fund from wallet
 //    @PostMapping("/api/v1/account/{accountId}/wallet/{walletId}/withdraw")
@@ -88,13 +85,13 @@ public class CardTransactionController {
 //    }
 
     //delete an account
-    @DeleteMapping("card-transaction/{id}")
+    @DeleteMapping("transaction/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Map<String, Boolean> deleteAccount(@PathVariable(value = "id") Long id)
+    public Map<String, Boolean> deleteTransaction(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
-        CardTransactions cardTransactions = cardTransactionRepository.findById(id)
+        Transactions transactions = transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card Transactions not found for this id: " + id));
-        cardTransactionRepository.delete(cardTransactions);
+        transactionRepository.delete(transactions);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

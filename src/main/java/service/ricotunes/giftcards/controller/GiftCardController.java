@@ -47,9 +47,7 @@ public class GiftCardController {
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
         double multiplyRate = giftCard.getRmbRate()* giftCard.getCardRate();
         double actualRate = multiplyRate - giftCard.getProfit();
-//        Country currency = giftCardRepository.findByCountry(giftCard.getCountry().getCurrency());
         giftCard.setRate(actualRate);
-//        giftCard.setCountry(currency);
        return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
