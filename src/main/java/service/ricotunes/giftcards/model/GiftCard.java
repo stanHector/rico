@@ -1,11 +1,16 @@
 package service.ricotunes.giftcards.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "giftCard")
@@ -49,13 +54,9 @@ public class GiftCard extends DateAudit {
 //    @Column(name="buyingRate")
 //    private double buyingRate;
 
-
     //TODO
     //image
     @Column(name = "image", length = 4096, columnDefinition = "TEXT")
     private String image;
-
-    public GiftCard() {
-    }
 
 }
