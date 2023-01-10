@@ -24,5 +24,4 @@ public class Transactions {
     private Long userId;
 
     private String status;
-
 }
