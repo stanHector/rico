@@ -19,5 +19,6 @@ public class TransactionImage {
             inverseJoinColumns = @JoinColumn(name = "transactions", referencedColumnName = "id"))
     private Transactions transaction;
 
+    @Column(name = "image", length = 4096, columnDefinition = "TEXT")
     private String image;
 }
