@@ -1,22 +1,16 @@
 package service.ricotunes.giftcards.controller;
 
-import service.ricotunes.giftcards.model.GiftCard;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import service.ricotunes.giftcards.dto.NewTransactionDto;
 import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
-import service.ricotunes.giftcards.model.TransactionImage;
 import service.ricotunes.giftcards.model.Transactions;
-import service.ricotunes.giftcards.repository.TransactionImageRepository;
 import service.ricotunes.giftcards.repository.TransactionRepository;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +20,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
-    private final TransactionImageRepository transactionImageRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
@@ -37,37 +30,27 @@ public class TransactionController {
 
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<Object> createTransaction(@Valid @RequestBody NewTransactionDto dto) {
+    public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
 
 
-        double cardQuantity = dto.getQuantity();
+        double cardQuantity = transactions.getQuantity();
         System.out.println("Quantity:: " + cardQuantity);
-        double buyingRate = dto.getGiftCard().getRate();
+        double buyingRate = transactions.getGiftCard().getRate();
         System.out.println("Buying Rate: " + buyingRate);
 
         double totalAmount = buyingRate * cardQuantity;
 
         Transactions transaction = new Transactions();
-        transaction.setQuantity(dto.getQuantity());
+        transaction.setQuantity(transactions.getQuantity());
         transaction.setAmount(totalAmount);
-        transaction.setGiftCard(dto.getGiftCard());
-        transaction.setUserId(dto.getUserId());
-        transaction.setStatus(dto.getStatus());
+        transaction.setStatus("SUBMITTED");
+        transaction.setRemarks(transactions.getRemarks());
+        transaction.setImageList(transactions.getImageList());
+        transaction.setGiftCard(transactions.getGiftCard());
+
         transaction = transactionRepository.save(transaction);
 
-        Transactions finalTransaction = transaction;
-
-        List<TransactionImage> transactionImages = new ArrayList<>();
-        dto.getImages().forEach(img -> {
-            TransactionImage transactionImage = new TransactionImage();
-            transactionImage.setTransaction(finalTransaction);
-            transactionImage.setImage(img);
-            transactionImages.add(transactionImage);
-        });
-        transactionImageRepository.saveAll(transactionImages);
-
-
-        return new ResponseEntity<>(transaction, HttpStatus.OK);
+       return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 
     //update an account
@@ -79,6 +62,8 @@ public class TransactionController {
         Transactions transactions = transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card Transactions not found for this id: " + id));
         transactions.setStatus(transactionDto.getStatus());
+        transactions.setRemarks(transactionDto.getRemark());
+        transactions.setAmount(transactionDto.getAmount());
         final Transactions updatedTransactions = transactionRepository.save(transactions);
         System.out.println("Updated CardTransactions " + updatedTransactions);
         return transactionRepository.save(updatedTransactions);

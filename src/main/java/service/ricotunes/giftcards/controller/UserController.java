@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,18 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/v1/")
 public class UserController {
 
     private UserRepository userRepository;
-    private final SimpMessagingTemplate webSocket;
+//    private final SimpMessagingTemplate webSocket;
 
-    public UserController(UserRepository userRepository,  SimpMessagingTemplate webSocket) {
-        this.userRepository = userRepository;
-        this.webSocket = webSocket;
-    }
 
     //get all users
     @GetMapping("users")

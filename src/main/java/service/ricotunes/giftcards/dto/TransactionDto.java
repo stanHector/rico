@@ -8,4 +8,5 @@ public class TransactionDto {
     private double quantity;
     private double amount;
     private String status;
+    private String remark;
 }

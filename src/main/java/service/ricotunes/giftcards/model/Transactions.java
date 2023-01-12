@@ -21,7 +21,13 @@ public class Transactions {
             inverseJoinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"))
     private GiftCard giftCard;
 
+    @Column
+    @ElementCollection(targetClass=String.class)
+    private List<String> imageList;
+
     private Long userId;
 
     private String status;
+
+    private String remarks;
 }
