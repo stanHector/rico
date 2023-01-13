@@ -2,7 +2,6 @@ package service.ricotunes.giftcards.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.UserDto;

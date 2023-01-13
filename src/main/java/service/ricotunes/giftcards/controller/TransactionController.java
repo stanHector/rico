@@ -23,15 +23,24 @@ public class TransactionController {
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
-    List<Transactions> getCardTransactions() {
+    List<Transactions> getTransactions() {
         return transactionRepository.findAll();
 
+    }
+
+
+    @GetMapping("transaction/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    ResponseEntity<Transactions> getGiftCardById(@PathVariable(value = "id") Long id)
+            throws ResourceNotFoundException {
+        Transactions transactions = transactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transactions not found for this id :: " + id));
+        return ResponseEntity.ok().body(transactions);
     }
 
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
-
 
         double cardQuantity = transactions.getQuantity();
         System.out.println("Quantity:: " + cardQuantity);
@@ -71,6 +80,7 @@ public class TransactionController {
 
 
     @GetMapping("transactions/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) {
         return transactionRepository.getAllByUserId(userId);
     }
