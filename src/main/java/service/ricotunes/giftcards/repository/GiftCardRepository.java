@@ -9,4 +9,6 @@ import service.ricotunes.giftcards.model.GiftCard;
 public interface GiftCardRepository extends JpaRepository<GiftCard,Long>{
 
     GiftCard findByCountry(Country currency);
+
+    GiftCard findByRate(double cardRate);
 }

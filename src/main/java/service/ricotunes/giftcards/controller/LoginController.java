@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,30 +30,21 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController {
     private static final String USER_ROLE_NOT_SET = "User role not set";
 
-    private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private final UserService userService;
     private final WalletRepository walletRepository;
-
-    public LoginController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserService userService, WalletRepository walletRepository) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-        this.walletRepository = walletRepository;
-    }
 
 
     @PostMapping("/login")

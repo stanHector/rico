@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,15 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/v1/")
 public class GiftCardController {
 
-    private GiftCardRepository giftCardRepository;
-    public GiftCardController(GiftCardRepository giftCardRepository) {
-        this.giftCardRepository = giftCardRepository;
-    }
+    private final GiftCardRepository giftCardRepository;
 
     @GetMapping("cards")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -45,10 +44,10 @@ public class GiftCardController {
     @PostMapping("card")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
-        double multiplyRate = giftCard.getRmbRate()* giftCard.getCardRate();
+        double multiplyRate = giftCard.getRmbRate() * giftCard.getCardRate();
         double actualRate = multiplyRate - giftCard.getProfit();
         giftCard.setRate(actualRate);
-       return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
+        return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
     //update a card
@@ -62,7 +61,7 @@ public class GiftCardController {
         giftcard.setType(giftCardDto.getType());
         giftcard.setCategory(giftCardDto.getCategory());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
-        double multiplyRate = giftcard.getRmbRate()* giftcard.getCardRate();
+        double multiplyRate = giftcard.getRmbRate() * giftcard.getCardRate();
         double actualRate = multiplyRate - giftcard.getProfit();
         giftcard.setRate(actualRate);
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);

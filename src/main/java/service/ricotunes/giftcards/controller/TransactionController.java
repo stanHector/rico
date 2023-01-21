@@ -7,9 +7,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
+import service.ricotunes.giftcards.model.GiftCard;
 import service.ricotunes.giftcards.model.Transactions;
+import service.ricotunes.giftcards.repository.GiftCardRepository;
 import service.ricotunes.giftcards.repository.TransactionRepository;
 
+import javax.transaction.Transaction;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
+    private final GiftCardRepository giftCardRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
@@ -27,7 +31,6 @@ public class TransactionController {
         return transactionRepository.findAll();
 
     }
-
 
     @GetMapping("transaction/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
@@ -41,25 +44,19 @@ public class TransactionController {
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
-
-        double cardQuantity = transactions.getQuantity();
-        System.out.println("Quantity:: " + cardQuantity);
-        double buyingRate = transactions.getGiftCard().getRate();
-        System.out.println("Buying Rate: " + buyingRate);
-
-        double totalAmount = buyingRate * cardQuantity;
-
         Transactions transaction = new Transactions();
         transaction.setQuantity(transactions.getQuantity());
-        transaction.setAmount(totalAmount);
-        transaction.setStatus("SUBMITTED");
+        transaction.setAmount(transactions.getAmount());
         transaction.setRemarks(transactions.getRemarks());
+        transaction.setGiftCardId(transactions.getGiftCardId());
         transaction.setImageList(transactions.getImageList());
-        transaction.setGiftCard(transactions.getGiftCard());
+        transaction.setUserId(transactions.getUserId());
+        transaction.setStatus("SUBMITTED");
 
-        transaction = transactionRepository.save(transaction);
+        transactionRepository.save(transactions);
 
-       return new ResponseEntity<>(transaction, HttpStatus.OK);
+
+        return new ResponseEntity<>(transaction, HttpStatus.CREATED);
     }
 
     //update an account
@@ -77,7 +74,6 @@ public class TransactionController {
         System.out.println("Updated CardTransactions " + updatedTransactions);
         return transactionRepository.save(updatedTransactions);
     }
-
 
     @GetMapping("transactions/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")

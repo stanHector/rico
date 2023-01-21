@@ -1,6 +1,7 @@
 package service.ricotunes.giftcards.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/v1/")
@@ -23,10 +25,6 @@ public class WalletController {
 
     private final WalletService walletService;
 
-    public WalletController(WalletRepository walletRepository, WalletService walletService) {
-        this.walletRepository = walletRepository;
-        this.walletService = walletService;
-    }
 
     //    get wallet by id
     @GetMapping("wallet/{id}")

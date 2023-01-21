@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.serviceImpl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.ricotunes.giftcards.repository.UserRepository;
@@ -7,14 +8,13 @@ import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.service.WalletService;
 
 
+@RequiredArgsConstructor
 @Service("walletService")
 public class WalletServiceImpl implements WalletService {
 
-    @Autowired
-    WalletRepository walletRepository;
+    private final WalletRepository walletRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
 //    @Override
 //    public Wallet createWallet(Long userId) throws UserDoesNotExistException {

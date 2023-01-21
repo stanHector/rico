@@ -20,15 +20,12 @@ public class GiftCard extends DateAudit {
     private long id;
 
     @NotBlank
-    @Column(name = "name")
     private String name;
 
     @NotBlank
-    @Column(name = "type")
     private String type;
 
     @NotBlank
-    @Column(name = "category")
     private String category;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,22 +34,10 @@ public class GiftCard extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "country_id", referencedColumnName = "id"))
     private Country country;
 
-//    @NotBlank
-    @Column(name = "rmbRate")
     private double rmbRate;
-
-    @Column(name = "cardRate")
     private double cardRate;
-
-//    @NotBlank
-    @Column(name = "profit")
     private double profit;
-
-    @Column(name = "rate")
     private double rate;
-
-//    @Column(name="buyingRate")
-//    private double buyingRate;
 
     //TODO
     //image

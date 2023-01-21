@@ -11,23 +11,16 @@ import java.util.List;
 @Table(name = "transactions")
 public class Transactions {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private double quantity;
     private double amount;
-        @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "transactions_giftCard",
-            joinColumns = @JoinColumn(name = "transactions_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"))
-    private GiftCard giftCard;
 
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> imageList;
-
     private Long userId;
-
+    private Long giftCardId;
     private String status;
-
     private String remarks;
 }
