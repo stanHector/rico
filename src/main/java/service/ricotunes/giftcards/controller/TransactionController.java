@@ -44,11 +44,13 @@ public class TransactionController {
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
+
         Transactions transaction = new Transactions();
+        transaction.setDate(transactions.getDate());
         transaction.setQuantity(transactions.getQuantity());
         transaction.setAmount(transactions.getAmount());
         transaction.setRemarks("Subject to review");
-        transaction.setGiftCard(transactions.getGiftCard());
+        transaction.setGiftCardId(transactions.getGiftCard().getId());
         transaction.setImageList(transactions.getImageList());
         transaction.setUserId(transactions.getUserId());
         transaction.setStatus("SUBMITTED");

@@ -1,8 +1,6 @@
 package service.ricotunes.giftcards.model;
 
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
 @Table(name = "transactions")
 public class Transactions {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String date;
     private double quantity;
@@ -23,8 +21,9 @@ public class Transactions {
     private Long userId;
     private String status;
     private String remarks;
+    private Long giftCardId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
     @JoinTable(name = "transactions_giftCard",
             joinColumns = @JoinColumn(name = "transactions_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"))
