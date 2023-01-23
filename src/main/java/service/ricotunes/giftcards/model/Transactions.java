@@ -24,7 +24,6 @@ public class Transactions {
     private String status;
     private String remarks;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "transactions_giftCard",
             joinColumns = @JoinColumn(name = "transactions_id", referencedColumnName = "id"),

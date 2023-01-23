@@ -48,7 +48,7 @@ public class TransactionController {
         transaction.setQuantity(transactions.getQuantity());
         transaction.setAmount(transactions.getAmount());
         transaction.setRemarks("Subject to review");
-        transaction.setGiftCardId(transactions.getGiftCardId());
+        transaction.setGiftCard(transactions.getGiftCard());
         transaction.setImageList(transactions.getImageList());
         transaction.setUserId(transactions.getUserId());
         transaction.setStatus("SUBMITTED");
