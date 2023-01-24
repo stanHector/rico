@@ -9,6 +9,7 @@ import service.ricotunes.giftcards.dto.UserDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.User;
 import service.ricotunes.giftcards.repository.UserRepository;
+import service.ricotunes.giftcards.service.UserService;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class UserController {
 
     private  final UserRepository userRepository;
+    private final UserService userService;
 
 //    private final SimpMessagingTemplate webSocket;
 
@@ -30,7 +32,7 @@ public class UserController {
     @GetMapping("users")
     @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.findAllUsers();
     }
 
 
