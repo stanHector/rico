@@ -21,7 +21,8 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class UserController {
 
-    private UserRepository userRepository;
+    private  final UserRepository userRepository;
+
 //    private final SimpMessagingTemplate webSocket;
 
 
