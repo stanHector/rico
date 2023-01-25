@@ -45,8 +45,10 @@ public class GiftCardController {
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
         double multiplyRate = giftCard.getRmbRate() * giftCard.getCardRate();
-        double actualRate = multiplyRate - giftCard.getProfit();
+        double actualRate = multiplyRate + giftCard.getProfit();
+        double adminRate = multiplyRate - giftCard.getProfit();
         giftCard.setRate(actualRate);
+        giftCard.setAdminRate(adminRate);
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
@@ -61,9 +63,12 @@ public class GiftCardController {
         giftcard.setType(giftCardDto.getType());
         giftcard.setCategory(giftCardDto.getCategory());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
+        giftcard.setProfit(giftCardDto.getProfit());
         double multiplyRate = giftcard.getRmbRate() * giftcard.getCardRate();
-        double actualRate = multiplyRate - giftcard.getProfit();
+        double actualRate = multiplyRate + giftcard.getProfit();
+        double adminRate = multiplyRate - giftcard.getProfit();
         giftcard.setRate(actualRate);
+        giftcard.setAdminRate(adminRate);
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);
         System.out.println("Updated Card " + updatedGiftCard);
         return giftCardRepository.save(updatedGiftCard);

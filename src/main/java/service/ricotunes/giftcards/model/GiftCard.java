@@ -38,10 +38,10 @@ public class GiftCard extends DateAudit {
     private double cardRate;
     private double profit;
     private double rate;
+    private double adminRate;
 
     //TODO
     //image
     @Column(name = "image", length = 4096, columnDefinition = "TEXT")
     private String image;
-
 }
