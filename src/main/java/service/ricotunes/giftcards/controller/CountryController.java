@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3001")
+//@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/v1/")
 public class CountryController {
@@ -25,6 +25,7 @@ public class CountryController {
     }
 
     @GetMapping("country")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     List<Country> getCountries(){
         return  countryRepository.findAll();
     }
@@ -33,7 +34,7 @@ public class CountryController {
     //get country by Id
     @GetMapping("country/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Country> getUserById(@PathVariable(value = "id") Long id)
+    public ResponseEntity<Country> getCountryById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Country country = countryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Country not found for this id :: " + id));

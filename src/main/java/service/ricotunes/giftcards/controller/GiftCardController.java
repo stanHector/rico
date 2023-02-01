@@ -39,14 +39,12 @@ public class GiftCardController {
         return ResponseEntity.ok().body(giftCard);
     }
 
-
     //create a card
     @PostMapping("card")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
-        double multiplyRate = giftCard.getRmbRate() * giftCard.getCardRate();
-        double actualRate = multiplyRate + giftCard.getProfit();
-        double adminRate = multiplyRate - giftCard.getProfit();
+        double adminRate = giftCard.getRmbRate() * giftCard.getCardRate();
+        double actualRate = adminRate - giftCard.getProfit();
         giftCard.setRate(actualRate);
         giftCard.setAdminRate(adminRate);
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
