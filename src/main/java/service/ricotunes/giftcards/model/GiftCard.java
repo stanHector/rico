@@ -1,16 +1,11 @@
 package service.ricotunes.giftcards.model;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "giftCard")
@@ -25,19 +20,22 @@ public class GiftCard extends DateAudit {
     @NotBlank
     private String type;
 
-    @NotBlank
-    private String category;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "giftCard_country",
+    @JoinTable(name = "giftCard_category",
             joinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "country_id", referencedColumnName = "id"))
-    private Country country;
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+    private Category category;
 
+    private String denomination;
+    
     private double rmbRate;
+
     private double cardRate;
+
     private double profit;
+
     private double rate;
+
     private double adminRate;
 
     //TODO

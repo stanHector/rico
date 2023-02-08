@@ -7,7 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.GiftCardDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
+import service.ricotunes.giftcards.model.Category;
 import service.ricotunes.giftcards.model.GiftCard;
+import service.ricotunes.giftcards.repository.CategoryRepository;
 import service.ricotunes.giftcards.repository.GiftCardRepository;
 
 import javax.validation.Valid;
@@ -36,6 +38,7 @@ public class GiftCardController {
             throws ResourceNotFoundException {
         GiftCard giftCard = giftCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found for this id: " + id));
+        System.out.println("Card Rate:: " + giftCard.getCategory().getCardRate());
         return ResponseEntity.ok().body(giftCard);
     }
 
@@ -43,8 +46,15 @@ public class GiftCardController {
     @PostMapping("card")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
-        double adminRate = giftCard.getRmbRate() * giftCard.getCardRate();
+        double card = giftCard.getCategory().getCardRate();
+
+        System.out.println("Card rate ::: " + card);
+        double adminRate = card * giftCard.getRmbRate();
         double actualRate = adminRate - giftCard.getProfit();
+        giftCard.setCardRate(giftCard.getCategory().getCardRate());
+        String denomination = giftCard.getCategory().getCategoryName();
+        System.out.println("Denomination:::: " + denomination);
+        giftCard.setDenomination(denomination);
         giftCard.setRate(actualRate);
         giftCard.setAdminRate(adminRate);
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
@@ -59,14 +69,9 @@ public class GiftCardController {
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found for this id: " + id));
         giftcard.setName(giftCardDto.getName());
         giftcard.setType(giftCardDto.getType());
-        giftcard.setCategory(giftCardDto.getCategory());
+        giftcard.setCardRate(giftcard.getCategory().getCardRate());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
         giftcard.setProfit(giftCardDto.getProfit());
-        double multiplyRate = giftcard.getRmbRate() * giftcard.getCardRate();
-        double actualRate = multiplyRate + giftcard.getProfit();
-        double adminRate = multiplyRate - giftcard.getProfit();
-        giftcard.setRate(actualRate);
-        giftcard.setAdminRate(adminRate);
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);
         System.out.println("Updated Card " + updatedGiftCard);
         return giftCardRepository.save(updatedGiftCard);

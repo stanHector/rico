@@ -23,13 +23,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
-    private final GiftCardRepository giftCardRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
     List<Transactions> getTransactions() {
         return transactionRepository.findAll();
-
     }
 
     @GetMapping("transaction/{id}")
@@ -51,6 +49,7 @@ public class TransactionController {
         transaction.setAmount(transactions.getAmount());
         transaction.setRemarks("Subject to review");
         transaction.setGiftCardId(transactions.getGiftCard().getId());
+//        transaction.setRate(transactions.getGiftCard().getRate());
         transaction.setImageList(transactions.getImageList());
         transaction.setUserId(transactions.getUserId());
         transaction.setStatus("SUBMITTED");

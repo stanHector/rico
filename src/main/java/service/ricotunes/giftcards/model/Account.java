@@ -1,35 +1,23 @@
 package service.ricotunes.giftcards.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account extends DateAudit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     private String accountName;
     private String bankName;
     private String accountNumber;
-//    private String accountType;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinTable(name = "account_user",
-//            joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Long userId;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinTable(name = "account_wallet",
-//            joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "wallet_id", referencedColumnName = "id"))
     private Long walletId;
-
-    public Account() {
-    }
-
 }
