@@ -30,7 +30,6 @@ public class CategoryController {
     @PostMapping("category")
     @PreAuthorize("hasRole('ADMIN')")
     public Category createCategory(@RequestBody Category category) {
-        category.setCardRate(category.getCardRate());
         return categoryRepository.save(category);
     }
 

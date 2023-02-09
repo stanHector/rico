@@ -15,7 +15,6 @@ public class Category {
 
     @NotBlank
     private String categoryName;
-
     private double cardRate;
 
     @ManyToOne(fetch = FetchType.EAGER)
