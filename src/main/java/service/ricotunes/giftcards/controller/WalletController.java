@@ -1,18 +1,11 @@
 package service.ricotunes.giftcards.controller;
 
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.WalletDto;
-import service.ricotunes.giftcards.exception.AccountNotAssociatedWithWalletException;
-import service.ricotunes.giftcards.exception.InsufficientBalanceInWalletException;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
-import service.ricotunes.giftcards.exception.WalletIdDoesNotExistException;
-import service.ricotunes.giftcards.model.Account;
-import service.ricotunes.giftcards.model.ServiceResponse;
 import service.ricotunes.giftcards.model.Wallet;
 import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.service.WalletService;
@@ -29,7 +22,6 @@ import java.util.Map;
 public class WalletController {
 
     private final WalletRepository walletRepository;
-    private final WalletService walletService;
 
     //    get wallet by id
     @GetMapping("wallet/{id}")

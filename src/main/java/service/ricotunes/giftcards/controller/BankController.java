@@ -1,6 +1,7 @@
 package service.ricotunes.giftcards.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class BankController {
         return bankRepository.findAll();
     }
 
-    @PostMapping("add-bank")
+    @PostMapping("bank")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity createBank(@RequestBody Banks bank){
-        return bankService.addBank(bank);
+    public ResponseEntity<Object> createBank(@RequestBody Banks bank){
+        return new ResponseEntity<>(bankService.addBank(bank), HttpStatus.CREATED);
     }
 }

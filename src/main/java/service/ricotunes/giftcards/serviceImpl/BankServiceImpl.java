@@ -16,7 +16,7 @@ public class BankServiceImpl implements BankService {
 
 
     @Override
-    public ResponseEntity<Banks> addBank(Banks bank) throws AlreadyExistException {
+   public Banks addBank(Banks bank) throws AlreadyExistException {
         Banks bankName = bankRepository.findByName(bank.getName());
         Banks bankCode = bankRepository.findBybankCode(bank.getBankCode());
         if (bankName != null) {
@@ -24,7 +24,7 @@ public class BankServiceImpl implements BankService {
         } else if (bankCode != null) {
             throw new AlreadyExistException(String.format("Bank with bank code %s already exist", bank.getBankCode()));
         } else {
-            return new ResponseEntity<>(bankRepository.save(bank), HttpStatus.CREATED);
+            return bankRepository.save(bank);
         }
     }
 

@@ -5,7 +5,6 @@ import lombok.Data;
 import service.ricotunes.giftcards.model.User;
 import service.ricotunes.giftcards.model.Wallet;
 
-
 @Data
 public class UserResponse {
     @JsonProperty("user")

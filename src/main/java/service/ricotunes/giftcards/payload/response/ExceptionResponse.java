@@ -1,6 +1,5 @@
 package service.ricotunes.giftcards.payload.response;
 
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;

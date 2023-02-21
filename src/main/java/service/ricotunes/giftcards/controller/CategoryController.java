@@ -6,10 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.CategoryDto;
-import service.ricotunes.giftcards.dto.UserDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Category;
-import service.ricotunes.giftcards.model.User;
 import service.ricotunes.giftcards.repository.CategoryRepository;
 import service.ricotunes.giftcards.service.CategoryService;
 
@@ -19,10 +17,10 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/")
 public class CategoryController {
-    private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
     @GetMapping("category")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     ResponseEntity<?> getCategories() {
         return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
     }

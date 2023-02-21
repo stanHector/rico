@@ -24,7 +24,6 @@ import java.util.Map;
 public class AccountController {
 
     private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
 
 
     //get all accounts

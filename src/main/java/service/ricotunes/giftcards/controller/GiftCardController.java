@@ -7,9 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.GiftCardDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
-import service.ricotunes.giftcards.model.Category;
 import service.ricotunes.giftcards.model.GiftCard;
-import service.ricotunes.giftcards.repository.CategoryRepository;
 import service.ricotunes.giftcards.repository.GiftCardRepository;
 
 import javax.validation.Valid;

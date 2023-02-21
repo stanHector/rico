@@ -1,9 +1,9 @@
 package service.ricotunes.giftcards.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.UserDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
@@ -22,11 +22,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class UserController {
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private  final UserRepository userRepository;
     private final UserService userService;
 
 //    private final SimpMessagingTemplate webSocket;
-
 
     //get all users
     @GetMapping("users")
@@ -46,6 +46,16 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @PatchMapping("user/{id}")
+    public User updatePassword(@PathVariable("id") Long id, @Valid UserDto userDto) throws ResourceNotFoundException {
+        System.out.println("Update User with ID = " + id + "...");
+        User users = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
+        users.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        final User updatedUser = userRepository.save(users);
+        System.out.println("Updated User Password " + updatedUser);
+        return userRepository.save(updatedUser);
+    }
 
     @PutMapping("user/{id}")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
@@ -53,7 +63,6 @@ public class UserController {
         System.out.println("Update User with ID = " + id + "...");
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id: " + id));
-
         user.setEmail(userDto.getEmail());
         user.setFullname(userDto.getFullname());
         user.setUsername(userDto.getUsername());
