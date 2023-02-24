@@ -74,6 +74,7 @@ public class GiftCardController {
         giftcard.setCardRate(giftCardDto.getCardRate());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
         giftcard.setProfit(giftCardDto.getProfit());
+        giftcard.setDenomination(giftcard.getCategory().getCategoryName());
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);
         System.out.println("Updated Card " + updatedGiftCard);
         return giftCardRepository.save(updatedGiftCard);
