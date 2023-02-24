@@ -9,7 +9,6 @@ import service.ricotunes.giftcards.dto.CategoryDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Category;
 import service.ricotunes.giftcards.repository.CategoryRepository;
-import service.ricotunes.giftcards.service.CategoryService;
 
 import javax.validation.Valid;
 
@@ -37,9 +36,9 @@ public class CategoryController {
         System.out.println("Update category with ID = " + id + "...");
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id: " + id));
-        category.setCardRate(categoryDto.getCardRate());
+//        category.setCardRate(categoryDto.getCardRate());
         final Category updatedCategory = categoryRepository.save(category);
-        System.out.println("Updated User " + updatedCategory);
+        System.out.println("Updated category " + updatedCategory);
         return categoryRepository.save(updatedCategory);
     }
 }

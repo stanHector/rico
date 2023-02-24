@@ -1,6 +1,8 @@
 package service.ricotunes.giftcards.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +38,7 @@ public class GiftCardController {
             throws ResourceNotFoundException {
         GiftCard giftCard = giftCardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found for this id: " + id));
-        System.out.println("Card Rate:: " + giftCard.getCategory().getCardRate());
+        System.out.println("Card Rate:: " + giftCard.getCardRate());
         return ResponseEntity.ok().body(giftCard);
     }
 
@@ -45,7 +47,7 @@ public class GiftCardController {
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
 
-        double cardRate = giftCard.getCategory().getCardRate();
+        double cardRate = giftCard.getCardRate();
         String denomination = giftCard.getCategory().getCategoryName();
         System.out.println("Denomination:::: " + denomination);
         System.out.println("rate ::: " + cardRate);
@@ -58,6 +60,8 @@ public class GiftCardController {
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
+
+
     //update a card
     @PutMapping("card/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,7 +71,7 @@ public class GiftCardController {
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found for this id: " + id));
         giftcard.setName(giftCardDto.getName());
         giftcard.setType(giftCardDto.getType());
-        giftcard.setCardRate(giftcard.getCategory().getCardRate());
+        giftcard.setCardRate(giftCardDto.getCardRate());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
         giftcard.setProfit(giftCardDto.getProfit());
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);

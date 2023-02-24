@@ -6,5 +6,4 @@ import service.ricotunes.giftcards.model.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Category findByCardRate(double cardRate);
 }
