@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "account")
 public class Account extends DateAudit {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String accountName;
     private String bankName;

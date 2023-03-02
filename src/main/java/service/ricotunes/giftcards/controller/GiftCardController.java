@@ -1,8 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +44,6 @@ public class GiftCardController {
     @PostMapping("card")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
-
         double cardRate = giftCard.getCardRate();
         String denomination = giftCard.getCategory().getCategoryName();
         System.out.println("Denomination:::: " + denomination);
@@ -55,11 +52,11 @@ public class GiftCardController {
         double actualRate = adminRate - giftCard.getProfit();
         System.out.println("admin Rate::" + adminRate);
         System.out.println("Profit :: " + giftCard.getProfit());
+        giftCard.setDenomination(denomination);
         giftCard.setRate(actualRate);
         giftCard.setAdminRate(adminRate);
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
-
 
 
     //update a card

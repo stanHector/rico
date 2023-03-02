@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "wallet")
 public class Wallet extends DateAudit {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double currentBalance;
     private Long userId;

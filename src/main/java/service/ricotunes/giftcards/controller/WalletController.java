@@ -8,7 +8,7 @@ import service.ricotunes.giftcards.dto.WalletDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Wallet;
 import service.ricotunes.giftcards.repository.WalletRepository;
-import service.ricotunes.giftcards.service.WalletService;
+import service.ricotunes.giftcards.repository.WithdrawRepository;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -22,6 +22,7 @@ import java.util.Map;
 public class WalletController {
 
     private final WalletRepository walletRepository;
+    private final WithdrawRepository withdrawRepository;
 
     //    get wallet by id
     @GetMapping("wallet/{id}")
@@ -47,7 +48,6 @@ public class WalletController {
         if (wallet == null) {
             throw new ResourceNotFoundException("Wallet not found for this userId: " + userId);
         } else {
-
             wallet.setCurrentBalance(walletDto.getCurrentBalance());
             final Wallet updatedWallet = walletRepository.save(wallet);
             System.out.println("Updated wallet " + updatedWallet);
@@ -60,9 +60,16 @@ public class WalletController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Wallet> getWalletByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
         Wallet wallet = walletRepository.findByUserId(userId);
+//        Withdraw withdraw = withdrawRepository.findByUserId(userId);
+//
+//        if (withdraw == null) {
+//            throw new ResourceNotFoundException("Withdraw not found for this user: "+ userId);
+//        }
         if (wallet == null) {
             throw new ResourceNotFoundException("Wallet not found for this userId: " + userId);
         }
+//        wallet.setCurrentBalance(withdraw.getRemainingBalance());
+//        wallet.setCurrentBalance(wallet.getCurrentBalance());
         return ResponseEntity.ok().body(wallet);
     }
 

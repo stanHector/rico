@@ -9,9 +9,8 @@ import javax.persistence.*;
 @Table(name = "Country")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String currency;
-
 }
