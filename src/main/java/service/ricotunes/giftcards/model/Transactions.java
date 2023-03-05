@@ -18,6 +18,11 @@ public class Transactions {
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> imageList;
+
+    @Column
+    @ElementCollection(targetClass=String.class)
+    private List<String> ecodeList;
+
     private Long userId;
     private String status;
     private String remarks;

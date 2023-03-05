@@ -47,9 +47,10 @@ public class GiftCardController {
         double cardRate = giftCard.getCardRate();
         String denomination = giftCard.getCategory().getCategoryName();
         System.out.println("Denomination:::: " + denomination);
-        System.out.println("rate ::: " + cardRate);
+
         double adminRate = cardRate * giftCard.getRmbRate();
         double actualRate = adminRate - giftCard.getProfit();
+        System.out.println("rate ::: " + actualRate);
         System.out.println("admin Rate::" + adminRate);
         System.out.println("Profit :: " + giftCard.getProfit());
         giftCard.setDenomination(denomination);
