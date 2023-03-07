@@ -26,7 +26,8 @@ public class Transactions {
     private Long userId;
     private String status;
     private String remarks;
-    private Long giftCardId;
+    private String type;
+//    private Long giftCardId;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
     @JoinTable(name = "transactions_giftCard",
