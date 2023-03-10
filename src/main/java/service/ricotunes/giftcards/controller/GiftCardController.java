@@ -50,6 +50,7 @@ public class GiftCardController {
 
         double adminRate = cardRate * giftCard.getRmbRate();
         double actualRate = adminRate - giftCard.getProfit();
+//        double roundedRate = Math.round(actualRate);
         System.out.println("rate ::: " + actualRate);
         System.out.println("admin Rate::" + adminRate);
         System.out.println("Profit :: " + giftCard.getProfit());

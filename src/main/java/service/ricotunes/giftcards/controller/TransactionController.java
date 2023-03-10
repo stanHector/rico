@@ -9,6 +9,7 @@ import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Transactions;
 import service.ricotunes.giftcards.repository.TransactionRepository;
+import service.ricotunes.giftcards.service.TransactionService;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -20,17 +21,17 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
     List<Transactions> getTransactions() {
-        return transactionRepository.findAll();
+        return transactionService.getAllTransactions();
     }
 
     @GetMapping("transaction/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    ResponseEntity<Transactions> getGiftCardById(@PathVariable(value = "id") Long id)
-            throws ResourceNotFoundException {
+    ResponseEntity<Transactions> getTransactionsById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Transactions transactions = transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transactions not found for this id :: " + id));
         return ResponseEntity.ok().body(transactions);
@@ -39,24 +40,7 @@ public class TransactionController {
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
-
-        Transactions transaction = new Transactions();
-        transaction.setDate(transactions.getDate());
-        transaction.setQuantity(transactions.getQuantity());
-        transaction.setAmount(transactions.getAmount());
-        transaction.setRemarks("Subject to review");
-//        transaction.setGiftCardId(transactions.getGiftCard().getId());
-        transaction.setImageList(transactions.getImageList());
-        transaction.setEcodeList(transactions.getEcodeList());
-        transaction.setType(transactions.getType());
-        transaction.setUserId(transactions.getUserId());
-        transaction.setStatus("SUBMITTED");
-//        transaction.setDenomination(transactions.getGiftCard().getCategory().getCategoryName());
-
-        transactionRepository.save(transactions);
-
-
-        return new ResponseEntity<>(transaction, HttpStatus.CREATED);
+        return new ResponseEntity<>(transactionService.addTransactions(transactions), HttpStatus.CREATED);
     }
 
     //update an account
@@ -77,7 +61,11 @@ public class TransactionController {
 
     @GetMapping("transactions/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) {
+    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
+        Transactions transactions = transactionRepository.findByUserId(userId);
+        if (transactions == null) {
+            throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
+        }
         return transactionRepository.getAllByUserId(userId);
     }
 

@@ -1,20 +1,22 @@
 package service.ricotunes.giftcards.model;
 
+
 import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "transactions")
-public class Transactions {
+@Table(name = "requests")
+public class RequestRates {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String transactionDate;
+    private String date;
     private double quantity;
     private double amount;
-
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> imageList;
@@ -25,8 +27,8 @@ public class Transactions {
     private String type;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
-    @JoinTable(name = "transactions_giftCard",
-            joinColumns = @JoinColumn(name = "transactions_id", referencedColumnName = "id"),
+    @JoinTable(name = "request_giftCard",
+            joinColumns = @JoinColumn(name = "request_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"))
     private GiftCard giftCard;
 }
