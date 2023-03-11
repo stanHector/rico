@@ -9,6 +9,7 @@ import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Transactions;
 import service.ricotunes.giftcards.repository.TransactionRepository;
+import service.ricotunes.giftcards.repository.UserRepository;
 import service.ricotunes.giftcards.service.TransactionService;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
+    private final UserRepository userRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")
@@ -70,40 +72,20 @@ public class TransactionController {
 //    }
 
 
+
+    //    get wallet by user id
     @GetMapping("transactions/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+    public ResponseEntity<Transactions> getAllTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
         Transactions transactions = transactionRepository.findByUserId(userId);
 
-        if (transactions == null) {
-            throw new ResourceNotFoundException("transactions not found for this userId: " + userId);
+       if (transactions == null) {
+            throw new ResourceNotFoundException("transactions not found for this user: "+ userId);
         }
         return ResponseEntity.ok().body(transactions);
     }
 
 
-
-    //transfer fund from wallet
-//    @PostMapping("/api/v1/account/{accountId}/wallet/{walletId}/withdraw")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    public ResponseEntity<ServiceResponse> withdraw(@PathVariable("accountId") long accountId, @PathVariable("walletId") long walletId, @RequestBody double amount) throws ResourceNotFoundException {
-//        ServiceResponse response = new ServiceResponse();
-//        Account account = accountRepository.withdrawFromAccount(walletId, accountId);
-//
-//        Wallet wallet = walletRepository.findById(walletId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id: " + walletId));
-//
-//        if (wallet.getCurrentBalance() == 0) {
-//            throw new InsufficientBalanceException(String.format("Balance in wallet with id  %s Insufficient", walletId));
-//        }
-//        if (wallet.getCurrentBalance() < amount) {
-//            throw new InsufficientBalanceException("The amount entered is less than balance in the wallet");
-//        } else {
-//            response.setStatus("200");
-//            response.setData(account);
-//            return new ResponseEntity<>(response, HttpStatus.OK);
-//        }
-//    }
 
     //delete an account
     @DeleteMapping("transaction/{id}")
