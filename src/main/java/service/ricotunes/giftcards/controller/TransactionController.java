@@ -59,27 +59,27 @@ public class TransactionController {
         return transactionRepository.save(updatedTransactions);
     }
 
-    @GetMapping("transactions/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
-        Transactions transactions = transactionRepository.findByUserId(userId);
-        if (transactions == null) {
-            throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
-        }
-        return transactionRepository.getAllByUserId(userId);
-    }
-
-
 //    @GetMapping("transactions/user/{userId}")
 //    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-//    public ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+//    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
 //        Transactions transactions = transactionRepository.findByUserId(userId);
-//
 //        if (transactions == null) {
-//            throw new ResourceNotFoundException("transactions not found for this userId: " + userId);
+//            throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
 //        }
-//        return ResponseEntity.ok().body(transactions);
+//        return transactionRepository.getAllByUserId(userId);
 //    }
+
+
+    @GetMapping("transactions/user/{userId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+        Transactions transactions = transactionRepository.findByUserId(userId);
+
+        if (transactions == null) {
+            throw new ResourceNotFoundException("transactions not found for this userId: " + userId);
+        }
+        return ResponseEntity.ok().body(transactions);
+    }
 
 
 
