@@ -74,7 +74,7 @@ public class TransactionController {
 
 
     //    get wallet by user id
-    @GetMapping("transactions/user/{userId}")
+    @GetMapping("transact/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Transactions> getAllTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
         Transactions transactions = transactionRepository.findByUserId(userId);
