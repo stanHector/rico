@@ -72,18 +72,18 @@ public class TransactionController {
     }
 
 
-
-    //    get wallet by user id
-    @GetMapping("transact/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<Transactions> getAllTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
-        Transactions transactions = transactionRepository.findByUserId(userId);
-
-       if (transactions == null) {
-            throw new ResourceNotFoundException("transactions not found for this user: "+ userId);
-        }
-        return ResponseEntity.ok().body(transactions);
-    }
+//
+//    //    get transactions by user id
+//    @GetMapping("transact/user/{userId}")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    public ResponseEntity<Transactions> getAllTransactionsByUserId(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+//        Transactions transactions = transactionRepository.findByUserId(userId);
+//
+//       if (transactions == null) {
+//            throw new ResourceNotFoundException("transactions not found for this user: "+ userId);
+//        }
+//        return ResponseEntity.ok().body(transactions);
+//    }
 
 
 
