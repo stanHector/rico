@@ -14,7 +14,7 @@ public class RequestRates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String date;
+    private String requestDate;
     private double quantity;
     private double amount;
     @Column

@@ -17,7 +17,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transactions addTransactions(Transactions transactions) {
         Transactions transaction = new Transactions();
-        transaction.setTransactionDate(transactions.getTransactionDate());
+        transaction.setDate(transactions.getDate());
         transaction.setQuantity(transactions.getQuantity());
         transaction.setAmount(transactions.getAmount());
         transaction.setRemarks("Subject to review");

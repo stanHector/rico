@@ -20,7 +20,7 @@ public class RequestRatesServiceImpl  implements RequestRatesService {
     @Override
     public RequestRates addRequest(RequestRates requestRates) {
         RequestRates requests = new RequestRates();
-        requests.setDate(requestRates.getDate());
+        requests.setRequestDate(requestRates.getRequestDate());
         requests.setQuantity(requestRates.getQuantity());
         requests.setAmount(requestRates.getAmount());
         requests.setImageList(requestRates.getImageList());

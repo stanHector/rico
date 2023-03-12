@@ -11,7 +11,7 @@ public class Transactions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String transactionDate;
+    private String date;
     private double quantity;
     private double amount;
 
