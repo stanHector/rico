@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.model;
 
+
 import lombok.Data;
 import service.ricotunes.giftcards.enums.TransactionType;
 
@@ -12,8 +13,14 @@ public class WalletTransactions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String bankName;
+    private String accountNumber;
+    private double amount;
+    private String accountName;
+    private String transactionReference;
+        private double balance;
+    private long userId;
 
     private TransactionType transactionType;
-    private double amount;
 
 }

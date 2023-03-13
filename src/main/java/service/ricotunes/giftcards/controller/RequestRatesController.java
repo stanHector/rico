@@ -37,8 +37,6 @@ public class RequestRatesController {
         return ResponseEntity.ok().body(requestRates);
     }
 
-
-
     @GetMapping("requests/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<RequestRates> getRequestRatesByUserId(@PathVariable Long userId) throws ResourceNotFoundException {

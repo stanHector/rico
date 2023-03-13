@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 
 @AllArgsConstructor
@@ -13,34 +12,25 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Entity
 @Table(name = "giftCard")
-public class GiftCard extends DateAudit {
+public class GiftCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String type;
-
     private double cardRate;
+    private String denomination;
+    private double rmbRate;
+    private double profit;
+    private double rate;
+    private double adminRate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "giftCard_category",
             joinColumns = @JoinColumn(name = "giftCard_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Category category;
-
-    private String denomination;
-
-    private double rmbRate;
-
-    private double profit;
-
-    private double rate;
-
-    private double adminRate;
 
     //TODO
     //image

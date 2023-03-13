@@ -42,6 +42,9 @@ public class TransactionController {
     @PostMapping("transaction")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Object> createTransaction(@Valid @RequestBody Transactions transactions) {
+        transactions.setRemarks("Subject to review");
+        transactions.setStatus("SUBMITTED");
+        transactions.setType(transactions.getGiftCard().getType());
         return new ResponseEntity<>(transactionService.addTransactions(transactions), HttpStatus.CREATED);
     }
 
@@ -55,7 +58,7 @@ public class TransactionController {
                 .orElseThrow(() -> new ResourceNotFoundException("Card Transactions not found for this id: " + id));
         transactions.setStatus(transactionDto.getStatus());
         transactions.setRemarks(transactionDto.getRemark());
-        transactions.setAmount(transactionDto.getAmount());
+//        transactions.setAmount(transactionDto.getAmount());
         final Transactions updatedTransactions = transactionRepository.save(transactions);
         System.out.println("Updated CardTransactions " + updatedTransactions);
         return transactionRepository.save(updatedTransactions);

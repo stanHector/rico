@@ -20,11 +20,10 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setDate(transactions.getDate());
         transaction.setQuantity(transactions.getQuantity());
         transaction.setAmount(transactions.getAmount());
-        transaction.setRemarks("Subject to review");
         transaction.setImageList(transactions.getImageList());
-        transaction.setType(transactions.getType());
+        transaction.setType(transactions.getGiftCard().getType());
         transaction.setUserId(transactions.getUserId());
-        transaction.setStatus("SUBMITTED");
+        transaction.setGiftCard(transactions.getGiftCard());
         return transactionRepository.save(transactions);
     }
 

@@ -1,7 +1,7 @@
 package service.ricotunes.giftcards.service;
 
 import org.springframework.stereotype.Service;
-import service.ricotunes.giftcards.model.Withdraw;
+import service.ricotunes.giftcards.model.WalletTransactions;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +9,11 @@ import java.util.Optional;
 @Service
 public interface WithdrawService {
 
-    Withdraw withdrawFund(Withdraw withdraw);
+    WalletTransactions withdrawFund(WalletTransactions walletTransactions);
 
-    List<Withdraw> getWithdraws();
+    List<WalletTransactions> getWithdraws();
 
-    List<Withdraw> getWithdrawsByUserId(Long userId);
+    List<WalletTransactions> getWithdrawsByUserId(Long userId);
 
-    Optional<Withdraw> getWithdrawById(Long id);
+    Optional<WalletTransactions> getWithdrawById(Long id);
 }

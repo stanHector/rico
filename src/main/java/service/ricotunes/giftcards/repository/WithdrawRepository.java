@@ -2,14 +2,14 @@ package service.ricotunes.giftcards.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import service.ricotunes.giftcards.model.Withdraw;
+import service.ricotunes.giftcards.model.WalletTransactions;
 
 import java.util.List;
 
 @Repository
-public interface WithdrawRepository extends JpaRepository<Withdraw, Long> {
-    List<Withdraw>findAllByUserId(Long userId);
+public interface WithdrawRepository extends JpaRepository<WalletTransactions, Long> {
+    List<WalletTransactions>findAllByUserId(Long userId);
 
-    Withdraw findByUserId(Long userId);
+    WalletTransactions findByUserId(Long userId);
 
 }

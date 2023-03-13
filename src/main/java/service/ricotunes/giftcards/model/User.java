@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"phone"}),
         @UniqueConstraint(columnNames = {"email"})})
-public class User extends DateAudit{
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
