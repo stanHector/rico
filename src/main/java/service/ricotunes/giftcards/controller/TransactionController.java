@@ -58,7 +58,6 @@ public class TransactionController {
                 .orElseThrow(() -> new ResourceNotFoundException("Card Transactions not found for this id: " + id));
         transactions.setStatus(transactionDto.getStatus());
         transactions.setRemarks(transactionDto.getRemark());
-//        transactions.setAmount(transactionDto.getAmount());
         final Transactions updatedTransactions = transactionRepository.save(transactions);
         System.out.println("Updated CardTransactions " + updatedTransactions);
         return transactionRepository.save(updatedTransactions);
