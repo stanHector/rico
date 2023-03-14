@@ -32,5 +32,4 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transactions> getAllTransactions() {
         return transactionRepository.findAll();
     }
-
 }
