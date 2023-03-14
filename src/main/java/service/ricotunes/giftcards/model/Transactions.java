@@ -14,7 +14,7 @@ public class Transactions {
     private String date;
     private double quantity;
     private double amount;
-//    private double totalAmount;
+    private double receivingAmount;
 
     @Column
     @ElementCollection(targetClass=String.class)

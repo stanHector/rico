@@ -22,6 +22,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setAmount(transactions.getAmount());
         transaction.setImageList(transactions.getImageList());
         transaction.setType(transactions.getGiftCard().getType());
+        transaction.setReceivingAmount(transactions.getReceivingAmount());
         transaction.setUserId(transactions.getUserId());
         transaction.setGiftCard(transactions.getGiftCard());
         return transactionRepository.save(transactions);
