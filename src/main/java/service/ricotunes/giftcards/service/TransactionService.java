@@ -9,5 +9,4 @@ import java.util.List;
 public interface TransactionService {
   Transactions addTransactions(Transactions transactions);
   List<Transactions> getAllTransactions();
-
 }
