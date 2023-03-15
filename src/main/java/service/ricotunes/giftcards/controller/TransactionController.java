@@ -70,7 +70,16 @@ public class TransactionController {
         if (transactions == null) {
             throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
         }
-        return transactionRepository.findAll();
+        return transactionRepository.getAllByUserId(userId);
+    }
+
+
+    @GetMapping("transaction/{userId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        Transactions transactions = transactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transactions not found for this id :: " + id));
+        return ResponseEntity.ok().body(transactions);
     }
 
     //delete an account
