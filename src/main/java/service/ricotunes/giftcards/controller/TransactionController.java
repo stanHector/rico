@@ -73,7 +73,7 @@ public class TransactionController {
         return ResponseEntity.ok().body(transactions);
     }
 
-    @GetMapping("transaction/{userId}")
+    @GetMapping("transactions/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Transactions transactions = transactionRepository.findById(id)
