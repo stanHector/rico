@@ -75,9 +75,15 @@ public class TransactionController {
 
     @GetMapping("transactions/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        Transactions transactions = transactionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Transactions not found for this id :: " + id));
+    ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) {
+        Transactions transactions = transactionRepository.findByUserId(userId);
+        if (transactions == null) {
+            try {
+                throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         return ResponseEntity.ok().body(transactions);
     }
 
