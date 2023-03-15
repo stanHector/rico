@@ -48,6 +48,11 @@ public class TransactionController {
         return new ResponseEntity<>(transactionService.addTransactions(transactions), HttpStatus.CREATED);
     }
 
+    @GetMapping("/transactions/user/{userId}")
+    public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) {
+        return transactionRepository.getAllByUserId(userId);
+    }
+
     //update an account
     @PutMapping("transaction/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
@@ -61,30 +66,6 @@ public class TransactionController {
         final Transactions updatedTransactions = transactionRepository.save(transactions);
         System.out.println("Updated CardTransactions " + updatedTransactions);
         return transactionRepository.save(updatedTransactions);
-    }
-
-//    @GetMapping("transactions/user/{userId}")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-//    public ResponseEntity<Transactions> getAllByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
-//        Transactions transactions = transactionRepository.findByUserId(userId);
-//        if (transactions == null) {
-//            throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
-//        }
-//        return ResponseEntity.ok().body(transactions);
-//    }
-
-    @GetMapping("transactions/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    ResponseEntity<Transactions> getTransactionsByUserId(@PathVariable(value = "userId") Long userId) {
-        Transactions transactions = transactionRepository.findByUserId(userId);
-        if (transactions == null) {
-            try {
-                throw new ResourceNotFoundException("Transactions not found for this userId :: " + userId);
-            } catch (ResourceNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return ResponseEntity.ok().body(transactions);
     }
 
     //delete an account
