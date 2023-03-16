@@ -9,7 +9,6 @@ import service.ricotunes.giftcards.dto.TransactionDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.Transactions;
 import service.ricotunes.giftcards.repository.TransactionRepository;
-import service.ricotunes.giftcards.repository.UserRepository;
 import service.ricotunes.giftcards.service.TransactionService;
 
 import javax.validation.Valid;
@@ -23,7 +22,6 @@ import java.util.Map;
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
-    private final UserRepository userRepository;
 
     @GetMapping("transactions")
     @PreAuthorize("hasRole('ADMIN')")

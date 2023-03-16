@@ -26,6 +26,8 @@ public class RequestRatesServiceImpl  implements RequestRatesService {
         requests.setImageList(requestRates.getImageList());
         requests.setType(requestRates.getType());
         requests.setUserId(requestRates.getUserId());
+        requests.setCountry(requestRates.getCountry());
+        requests.setComment(requestRates.getComment());
         return requestRateRepository.save(requestRates);
     }
 

@@ -22,9 +22,9 @@ public class RequestRates {
     private List<String> imageList;
 
     private Long userId;
-    private String status;
-    private String remarks;
     private String type;
+    private String country;
+    private String comment;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
     @JoinTable(name = "request_giftCard",
