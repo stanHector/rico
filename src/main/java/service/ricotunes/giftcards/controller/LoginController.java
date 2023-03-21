@@ -77,8 +77,9 @@ public class LoginController {
         String phone = signUpRequest.getPhone().toLowerCase();
         String email = signUpRequest.getEmail().toLowerCase();
         String password = passwordEncoder.encode(signUpRequest.getPassword());
+        String transactionPin = signUpRequest.getTransactionPin().toLowerCase();
 
-        User user = new User(username, fullname, phone, email, password);
+        User user = new User(username, fullname, phone, email, transactionPin, password);
 
         List<Role> roles = new ArrayList<>();
 

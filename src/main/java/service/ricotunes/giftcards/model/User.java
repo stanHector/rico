@@ -65,7 +65,7 @@ public class User {
     private List<Role> roles;
 
 
-    public User(String username, String fullname, String phone, String email, String transactionPin,  String password) {
+    public User(String username, String fullname, String phone, String email,String transactionPin,  String password) {
         this.username = username;
         this.fullname = fullname;
         this.phone = phone;
