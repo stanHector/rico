@@ -3,7 +3,6 @@ package service.ricotunes.giftcards.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.UserDto;
@@ -50,19 +49,14 @@ public class UserController {
 
     @PatchMapping("user/{id}")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
-    public User updatePassword(@PathVariable("id") Long id, @Valid UserDto userDto) throws ResourceNotFoundException {
+    public User updatePassword(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto) throws ResourceNotFoundException {
         User users = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
 
-        if (!BCrypt.checkpw(userDto.getPassword(), users.getPassword())) {
-            throw new RuntimeException("Password Mismatch!.");
-        }
-        else {
             users.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             final User updatedUser = userRepository.save(users);
             System.out.println("Updated User Password " + updatedUser);
             return userRepository.save(updatedUser);
-        }
     }
 
     @PutMapping("user/{id}")

@@ -47,7 +47,7 @@ public class User {
     @Email
     private String email;
 
-    @NotBlank
+//    @NotBlank
     @Size(max = 4)
     @Column(name = "transaction_pin")
     private String transactionPin;

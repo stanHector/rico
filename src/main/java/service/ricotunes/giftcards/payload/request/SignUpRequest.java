@@ -30,7 +30,7 @@ public class SignUpRequest {
     @Email
     private String email;
 
-    @NotBlank
+//    @NotBlank
     @Size(max = 40)
     private String transactionPin;
 
