@@ -47,26 +47,26 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    //update password
     @PatchMapping("user/{id}")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public User updatePassword(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto) throws ResourceNotFoundException {
         User users = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
             users.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             final User updatedUser = userRepository.save(users);
             System.out.println("Updated User Password " + updatedUser);
             return userRepository.save(updatedUser);
     }
 
+    //update user details
     @PutMapping("user/{id}")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public User updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto) throws ResourceNotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id: " + id));
         user.setEmail(userDto.getEmail());
-        user.setFullname(userDto.getFullname());
-        user.setUsername(userDto.getUsername());
+        user.setPhone(userDto.getPhone());
         final User updatedUser = userRepository.save(user);
         System.out.println("Updated User " + updatedUser);
         return userRepository.save(updatedUser);
