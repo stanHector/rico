@@ -3,6 +3,7 @@ package service.ricotunes.giftcards.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.UserDto;
@@ -26,6 +27,7 @@ public class UserController {
     private  final UserRepository userRepository;
     private final UserService userService;
 
+
 //    private final SimpMessagingTemplate webSocket;
 
     //get all users
@@ -47,20 +49,25 @@ public class UserController {
     }
 
     @PatchMapping("user/{id}")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public User updatePassword(@PathVariable("id") Long id, @Valid UserDto userDto) throws ResourceNotFoundException {
-        System.out.println("Update User with ID = " + id + "...");
         User users = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-        users.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        final User updatedUser = userRepository.save(users);
-        System.out.println("Updated User Password " + updatedUser);
-        return userRepository.save(updatedUser);
+
+        if (!BCrypt.checkpw(userDto.getPassword(), users.getPassword())) {
+            throw new RuntimeException("Password Mismatch!.");
+        }
+        else {
+            users.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            final User updatedUser = userRepository.save(users);
+            System.out.println("Updated User Password " + updatedUser);
+            return userRepository.save(updatedUser);
+        }
     }
 
     @PutMapping("user/{id}")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public User updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto) throws ResourceNotFoundException {
-        System.out.println("Update User with ID = " + id + "...");
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id: " + id));
         user.setEmail(userDto.getEmail());
