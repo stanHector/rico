@@ -46,7 +46,7 @@ public class TransactionController {
         return new ResponseEntity<>(transactionService.addTransactions(transactions), HttpStatus.CREATED);
     }
 
-    @GetMapping("/transactions/user/{userId}")
+    @GetMapping("transactions/user/{userId}")
     public List<Transactions> getTransactionsByUserId(@PathVariable Long userId) {
         return transactionRepository.getAllByUserId(userId);
     }

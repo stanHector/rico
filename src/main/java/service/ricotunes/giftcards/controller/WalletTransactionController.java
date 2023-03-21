@@ -18,8 +18,8 @@ public class WalletTransactionController {
     private final WithdrawService withdrawService;
     private final WalletRepository walletRepository;
 
-    @PostMapping("/wallet-transactions/{userId}")
-    ResponseEntity<Object> createWithdraw(@PathVariable(value = "userId") Long userId, @RequestBody WalletTransactions walletTransactions)  {
+    @PostMapping("wallet-transactions/{userId}")
+    ResponseEntity<Object> createWithdraw(@PathVariable(value = "userId") Long userId, @RequestBody WalletTransactions walletTransactions) {
         Wallet wallet = walletRepository.findByUserId(userId);
         double balance = wallet.getCurrentBalance();
 

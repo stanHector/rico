@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
         roles.add(
                 roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
         user.setRoles(roles);
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

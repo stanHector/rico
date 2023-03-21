@@ -18,9 +18,8 @@ public class WalletTransactions {
     private double amount;
     private String accountName;
     private String transactionReference;
-        private double balance;
+    private double balance;
     private long userId;
-
     private TransactionType transactionType;
-
+//    private Long walletId;
 }

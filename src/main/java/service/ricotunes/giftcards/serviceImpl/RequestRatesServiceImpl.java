@@ -35,9 +35,4 @@ public class RequestRatesServiceImpl  implements RequestRatesService {
     public List<RequestRates> getRequest() {
         return requestRateRepository.findAll();
     }
-
-    @Override
-    public RequestRates updateRequest(RequestRates requestRates) {
-        return null;
-    }
 }

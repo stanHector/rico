@@ -11,6 +11,4 @@ public interface RequestRatesService {
     RequestRates addRequest(RequestRates requestRates);
 
     List<RequestRates> getRequest();
-
-    RequestRates updateRequest(RequestRates requestRates);
 }
