@@ -23,7 +23,6 @@ import service.ricotunes.giftcards.repository.RoleRepository;
 import service.ricotunes.giftcards.repository.UserRepository;
 import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.security.JwtTokenProvider;
-import service.ricotunes.giftcards.service.UserService;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -43,7 +42,6 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final UserService userService;
     private final WalletRepository walletRepository;
 
 
