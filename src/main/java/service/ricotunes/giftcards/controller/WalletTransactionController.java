@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ricotunes.giftcards.exception.BadRequestException;
-import service.ricotunes.giftcards.exception.InsufficientBalanceException;
 import service.ricotunes.giftcards.model.Wallet;
 import service.ricotunes.giftcards.model.WalletTransactions;
+import service.ricotunes.giftcards.payload.response.ApiResponse;
 import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.service.WithdrawService;
 
@@ -26,11 +25,14 @@ public class WalletTransactionController {
         System.out.println("Balance: " + balance);
         double amount = walletTransactions.getAmount();
         if (balance == 0.0) {
-            throw new InsufficientBalanceException(String.format("Insufficient fund in wallet with balance %s ", walletTransactions.getAmount()));
+            return new ResponseEntity<>(new ApiResponse(false, "Insufficient Balance in wallet", HttpStatus.BAD_REQUEST), HttpStatus.OK);
+//            throw new InsufficientBalanceException(String.format("Insufficient fund in wallet with balance %s ", walletTransactions.getAmount()));
         } else if (balance < amount) {
-            throw new BadRequestException(String.format("Amount withdrawn can not be greater than wallet balance %s ", walletTransactions.getAmount()));
+            return new ResponseEntity<>(new ApiResponse(false, "Amount withdrawn can not be greater than wallet balance", HttpStatus.BAD_REQUEST), HttpStatus.OK);
+//            throw new BadRequestException(String.format("Amount withdrawn can not be greater than wallet balance %s ", walletTransactions.getAmount()));
         } else if (amount < 0) {
-            throw new BadRequestException(String.format("Amount withdrawn can not be negative %s ", walletTransactions.getAmount()));
+            return new ResponseEntity<>(new ApiResponse(false, "Amount withdrawn can not be negative", HttpStatus.BAD_REQUEST), HttpStatus.OK);
+//            throw new BadRequestException(String.format("Amount withdrawn can not be negative %s ", walletTransactions.getAmount()));
         } else {
             double newBalance = balance - amount;
             walletTransactions.setBalance(newBalance);

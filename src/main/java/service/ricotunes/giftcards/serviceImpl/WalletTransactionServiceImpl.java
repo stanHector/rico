@@ -22,9 +22,7 @@ public class WalletTransactionServiceImpl implements WithdrawService {
 
     @Override
     public WalletTransactions withdrawFund(WalletTransactions walletTransactions) {
-
             return withdrawRepository.save(walletTransactions);
-
     }
 
     @Override
