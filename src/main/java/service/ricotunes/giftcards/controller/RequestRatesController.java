@@ -25,16 +25,19 @@ public class RequestRatesController {
 
 
     @GetMapping("requests")
+    @PreAuthorize("hasRole('ADMIN')")
     List<RequestRates> getRequestRates() {
         return requestRatesService.getRequest();
     }
 
     @PostMapping("request")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     ResponseEntity<Object> createRequestRates(@RequestBody RequestRates requestRates) {
         return new ResponseEntity<>(requestRatesService.addRequest(requestRates), HttpStatus.CREATED);
     }
 
     @GetMapping("request/{id}")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     ResponseEntity<Object> getRequestById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         RequestRates requestRates = requestRateRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Request not found for this id :: " + id));
@@ -43,6 +46,7 @@ public class RequestRatesController {
 
     //get all requests by a user
     @GetMapping("request/user/{userId}")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public List<RequestRates> getRequestsByUserId(@PathVariable Long userId) {
         return requestRateRepository.getAllByUserId(userId);
     }
@@ -56,7 +60,6 @@ public class RequestRatesController {
         requestRates.setComment(requestRatesDto.getComment());
         requestRates.setAmount(requestRatesDto.getAmount());
         final RequestRates updatedRates = requestRateRepository.save(requestRates);
-//        System.out.println("Updated User " + updatedRates);
         return requestRateRepository.save(updatedRates);
     }
 

@@ -20,6 +20,7 @@ public class WalletTransactions {
     private String transactionReference;
     private double balance;
     private long userId;
+    private  String email;
     private TransactionType transactionType;
 //    private Long walletId;
 }
