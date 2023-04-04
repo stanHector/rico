@@ -12,6 +12,7 @@ import service.ricotunes.giftcards.repository.RequestRateRepository;
 import service.ricotunes.giftcards.service.RequestRatesService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +28,21 @@ public class RequestRatesController {
     @GetMapping("requests")
     @PreAuthorize("hasRole('ADMIN')")
     List<RequestRates> getRequestRates() {
-        return requestRatesService.getRequest();
+        return requestRateRepository.findAll();
     }
 
     @PostMapping("request")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
-    ResponseEntity<Object> createRequestRates(@RequestBody RequestRates requestRates) {
-        return new ResponseEntity<>(requestRatesService.addRequest(requestRates), HttpStatus.CREATED);
+    ResponseEntity<Object> createRequestRates(@RequestBody RequestRates requests) {
+        requests.setRequestDate(String.valueOf(LocalDate.now()));
+        requests.setQuantity(requests.getQuantity());
+        requests.setAmount(requests.getAmount());
+        requests.setImageList(requests.getImageList());
+        requests.setType(requests.getType());
+        requests.setUserId(requests.getUserId());
+        requests.setCountry(String.valueOf(requests.getGiftCard().getCategory().getCountry()));
+        requests.setComment(requests.getComment());
+        return new ResponseEntity<>(requestRateRepository.save(requests), HttpStatus.CREATED);
     }
 
     @GetMapping("request/{id}")

@@ -23,6 +23,7 @@ public class RequestRates {
 
     private Long userId;
     private String type;
+    private String category;
     private String country;
     private String comment;
 
