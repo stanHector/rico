@@ -40,7 +40,7 @@ public class RequestRatesController {
         requests.setImageList(requests.getImageList());
         requests.setType(requests.getType());
         requests.setUserId(requests.getUserId());
-        requests.setCountry(String.valueOf(requests.getGiftCard().getCategory().getCountry()));
+        requests.setCountry(String.valueOf(requests.getGiftCard().getCategory().getCountry().getCurrency()));
         requests.setComment(requests.getComment());
         return new ResponseEntity<>(requestRateRepository.save(requests), HttpStatus.CREATED);
     }
