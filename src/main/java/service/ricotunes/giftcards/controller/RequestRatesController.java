@@ -12,7 +12,6 @@ import service.ricotunes.giftcards.repository.RequestRateRepository;
 import service.ricotunes.giftcards.service.RequestRatesService;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +33,7 @@ public class RequestRatesController {
     @PostMapping("request")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     ResponseEntity<Object> createRequestRates(@RequestBody RequestRates requests) {
-        requests.setRequestDate(String.valueOf(LocalDateTime.now()));
-        requests.setQuantity(requests.getQuantity());
-        requests.setAmount(requests.getAmount());
-        requests.setImageList(requests.getImageList());
-        requests.setType(requests.getType());
-        requests.setCategory(requests.getGiftCard().getDenomination());
-        requests.setUserId(requests.getUserId());
-        requests.setCountry(String.valueOf(requests.getGiftCard().getCategory().getCountry().getCurrency()));
-        requests.setComment(requests.getComment());
-        return new ResponseEntity<>(requestRateRepository.save(requests), HttpStatus.CREATED);
+        return new ResponseEntity<>(requestRatesService.addRequest(requests), HttpStatus.CREATED);
     }
 
     @GetMapping("request/{id}")
