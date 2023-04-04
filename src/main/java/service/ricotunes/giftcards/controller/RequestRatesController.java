@@ -12,7 +12,7 @@ import service.ricotunes.giftcards.repository.RequestRateRepository;
 import service.ricotunes.giftcards.service.RequestRatesService;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class RequestRatesController {
     @PostMapping("request")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     ResponseEntity<Object> createRequestRates(@RequestBody RequestRates requests) {
-        requests.setRequestDate(String.valueOf(LocalDate.now()));
+        requests.setRequestDate(String.valueOf(LocalDateTime.now()));
         requests.setQuantity(requests.getQuantity());
         requests.setAmount(requests.getAmount());
         requests.setImageList(requests.getImageList());
