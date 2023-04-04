@@ -39,6 +39,7 @@ public class RequestRatesController {
         requests.setAmount(requests.getAmount());
         requests.setImageList(requests.getImageList());
         requests.setType(requests.getType());
+        requests.setCategory(requests.getGiftCard().getDenomination());
         requests.setUserId(requests.getUserId());
         requests.setCountry(String.valueOf(requests.getGiftCard().getCategory().getCountry().getCurrency()));
         requests.setComment(requests.getComment());
