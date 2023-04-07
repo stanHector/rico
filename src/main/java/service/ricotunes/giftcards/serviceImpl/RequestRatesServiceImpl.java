@@ -31,6 +31,4 @@ public class RequestRatesServiceImpl implements RequestRatesService {
         requests.setComment(requestRates.getComment());
         return requestRateRepository.save(requests);
     }
-
-
 }
