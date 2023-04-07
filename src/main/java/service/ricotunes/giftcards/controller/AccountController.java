@@ -37,7 +37,6 @@ public class AccountController {
         return accountRepository.getAllByUserId(userId);
     }
 
-
     //create an account
     @PostMapping("/account")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
