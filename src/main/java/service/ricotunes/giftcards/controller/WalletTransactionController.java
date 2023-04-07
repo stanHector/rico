@@ -17,7 +17,6 @@ public class WalletTransactionController {
     private final WithdrawService withdrawService;
     private final WalletRepository walletRepository;
 
-
     @PostMapping("wallet-transactions/{userId}")
     ResponseEntity<Object> createWithdraw(@PathVariable(value = "userId") Long userId, @RequestBody WalletTransactions walletTransactions) {
         Wallet wallet = walletRepository.findByUserId(userId);
@@ -27,15 +26,9 @@ public class WalletTransactionController {
         double amount = walletTransactions.getAmount();
         if (balance == 0.0) {
             return new ResponseEntity<>(new Response(405, "Insufficient fund in wallet with balance", walletTransactions), HttpStatus.OK);
-//            throw new InsufficientBalanceException(String.format("Insufficient fund in wallet with balance %s ", walletTransactions.getAmount()));
         }
         if (balance < amount) {
             return new ResponseEntity<>(new Response(401, "Amount withdrawn can not be greater than wallet balance", walletTransactions), HttpStatus.OK);
-//            throw new BadRequestException(String.format("Amount withdrawn can not be greater than wallet balance %s ", walletTransactions.getAmount()));
-        }
-        if (amount < 0) {
-            return new ResponseEntity<>(new Response(400, "Amount withdrawn can not be negative", walletTransactions), HttpStatus.OK);
-//            throw new BadRequestException(String.format("Amount withdrawn can not be negative %s ", walletTransactions.getAmount()));
         }
         double newBalance = balance - amount;
         walletTransactions.setBalance(newBalance);
