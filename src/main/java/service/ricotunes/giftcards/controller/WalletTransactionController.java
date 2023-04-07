@@ -33,6 +33,7 @@ public class WalletTransactionController {
         double newBalance = balance - amount;
         walletTransactions.setBalance(newBalance);
         walletTransactions.setTransactionType(walletTransactions.getTransactionType());
+        walletTransactions.setStatus("Submitted");
         System.out.println("Remaining balance: " + newBalance);
 
         if (wallet != null) {
