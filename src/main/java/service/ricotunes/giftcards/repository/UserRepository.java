@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByTransactionPin(String transactionPin);
 
-	Boolean verifyTransactionPin(long id, String transactionPin);
+//	boolean verifyTransactionPin(long id, String transactionPin);
 
 
 //    User findByPhone(String phone);
