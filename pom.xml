@@ -199,6 +199,15 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -214,19 +223,21 @@
             <version>8.36.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>javax.mail</groupId>-->
-        <!--            <artifactId>javax.mail-api</artifactId>-->
-        <!--            <version>1.6.2</version>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>com.sun.mail</groupId>-->
-        <!--            <artifactId>javax.mail</artifactId>-->
-        <!--            <version>1.6.2</version>-->
-        <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -239,8 +250,6 @@
             <artifactId>spring-messaging</artifactId>
             <version>5.3.22</version>
         </dependency>
-
-
     </dependencies>
 
 

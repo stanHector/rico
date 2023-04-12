@@ -18,6 +18,7 @@ import service.ricotunes.giftcards.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -58,4 +59,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public boolean verifyTransactionPin(long userId, String transactionPin) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user != null && user.get().getTransactionPin().equals(transactionPin)) {
+            return true;
+        }
+        return false;
+    }
 }

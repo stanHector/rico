@@ -35,6 +35,7 @@ public class WalletTransactionController {
         walletTransactions.setTransactionType(walletTransactions.getTransactionType());
         walletTransactions.setStatus("Submitted");
         System.out.println("Remaining balance: " + newBalance);
+        //        assetEmailsService.sendEmailWithAttachment(asset1);
 
         if (wallet != null) {
             wallet.setCurrentBalance(walletTransactions.getBalance());

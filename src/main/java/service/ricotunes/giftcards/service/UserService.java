@@ -14,4 +14,6 @@ public interface UserService {
 	User addUser(User user);
 
 	List<User> findAllUsers();
+
+	boolean verifyTransactionPin(long userId, String transactionPin);
 }

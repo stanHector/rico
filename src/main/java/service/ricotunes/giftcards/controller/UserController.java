@@ -38,6 +38,18 @@ public class UserController {
     }
 
 
+    //verify transaction pin
+    @PostMapping("users/verify-pin")
+    public ResponseEntity<String> verifyTransactionPin(@RequestBody User user) {
+        boolean isPinVerified = userService.verifyTransactionPin(user.getId(), user.getTransactionPin());
+        if (isPinVerified) {
+            return ResponseEntity.ok("Transaction PIN verified successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid transaction PIN");
+        }
+    }
+
+
     //get user by Id
     @GetMapping("user/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -73,11 +85,11 @@ public class UserController {
         if (users != null) {
             return new ResponseEntity<>("User not found with this id", HttpStatus.NOT_FOUND);
         }
-            if (users.getTransactionPin().equals(user.getTransactionPin())) {
-                return new ResponseEntity<>("Pin verified successfully", HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Pin not verified", HttpStatus.BAD_REQUEST);
+        if (users.getTransactionPin().equals(user.getTransactionPin())) {
+            return new ResponseEntity<>("Pin verified successfully", HttpStatus.OK);
         }
+        return new ResponseEntity<>("Pin not verified", HttpStatus.BAD_REQUEST);
+    }
 
 
     //update user details
