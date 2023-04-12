@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean verifyTransactionPin(long userId, String transactionPin) {
-        Optional<User> user = userRepository.findById(userId);
+    public boolean verifyTransactionPin(long id, String transactionPin) {
+        Optional<User> user = userRepository.findById(id);
         if (user != null && user.get().getTransactionPin().equals(transactionPin)) {
             return true;
         }
