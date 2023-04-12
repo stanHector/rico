@@ -39,9 +39,9 @@ public class UserController {
 
 
     //verify transaction pin
-    @PostMapping("users/verify-pin")
-    public ResponseEntity<String> verifyTransactionPin(@RequestBody User user) {
-        boolean isPinVerified = userService.verifyTransactionPin(user.getId(), user.getTransactionPin());
+    @PostMapping("user/verify-pin")
+    public ResponseEntity<String> verifyTransactionPin(@RequestBody long id, String  transactionPin) {
+        boolean isPinVerified = userRepository.verifyTransactionPin(id, transactionPin);
         if (isPinVerified) {
             return ResponseEntity.ok("Transaction PIN verified successfully");
         } else {
