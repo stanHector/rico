@@ -11,11 +11,12 @@ public class JwtAuthenticationResponse<T> {
     private String fullname;
     private String phone;
     private String email;
+    private String transactionPin;
 
     public JwtAuthenticationResponse() {
     }
 
-        public JwtAuthenticationResponse(String accessToken, String message, long id, String username,  String fullname, String phone, String email ) {
+        public JwtAuthenticationResponse(String accessToken, String message, long id, String username,  String fullname, String phone, String email, String transactionPin ) {
         this.accessToken = accessToken;
         this.message = message;
         this.id = id;
@@ -23,6 +24,7 @@ public class JwtAuthenticationResponse<T> {
         this.fullname = fullname;
         this.phone = phone;
         this.email = email;
+        this.transactionPin = transactionPin;
     }
 
     public JwtAuthenticationResponse(String accessToken) {

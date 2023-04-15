@@ -43,8 +43,7 @@ public class UserController {
     public ResponseEntity<Object>verifyTransactionPin(@RequestBody String transactionPin) {
         User user = userRepository.findByTransactionPin(transactionPin);
 
-
-        System.out.println("Entered transaction pin" + transactionPin);
+       System.out.println("Entered transaction pin" + transactionPin);
 
         System.out.println("User Pin: " + user.getTransactionPin());
 
@@ -58,7 +57,6 @@ public class UserController {
         return new ResponseEntity<>(new Response(200, "Pin Verifie", transactionPin), HttpStatus.OK);
 
     }
-
 
     //get user by Id
     @GetMapping("user/{id}")

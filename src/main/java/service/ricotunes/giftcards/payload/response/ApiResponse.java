@@ -36,6 +36,7 @@ public class ApiResponse<T,K> implements Serializable {
 	@JsonProperty("phone")
 	private String phone;
 
+
 	//@JsonIgnore
 	private HttpStatus statusCode;
 
@@ -64,7 +65,7 @@ public class ApiResponse<T,K> implements Serializable {
 		this.payload = payload;
 	}
 
-    public ApiResponse(Boolean status, String message, String firstname, String lastname, String email, String phone, HttpStatus statusCode) {
+    public ApiResponse(Boolean status, String message, String firstname, String lastname, String email, String phone,HttpStatus statusCode) {
         this.status = status;
         this.message = message;
         this.firstname = firstname;
