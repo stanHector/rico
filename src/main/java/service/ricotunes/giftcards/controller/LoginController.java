@@ -52,7 +52,7 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
         User users = userRepository.findByEmail(loginRequest.getUsernameOrEmail());
-        return ResponseEntity.ok(new JwtAuthenticationResponse("Bearer " + jwt, "Login Successful!", users.getId(), users.getUsername(), users.getFullname(), users.getPhone(), users.getEmail(), users.getUsername()));
+        return ResponseEntity.ok(new JwtAuthenticationResponse("Bearer " + jwt, "Login Successful!", users.getId(), users.getUsername(), users.getFullname(), users.getPhone(), users.getEmail(), users.getTransactionPin()));
 //        return ResponseEntity.ok(new JwtAuthenticationResponse());
     }
 
