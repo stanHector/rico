@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,16 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@CrossOrigin(origins = "http://localhost:3001")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 public class CountryController {
 
-    private CountryRepository countryRepository;
-
-    public CountryController(CountryRepository countryRepository) {
-        this.countryRepository = countryRepository;
-    }
+    private final CountryRepository countryRepository;
 
     @GetMapping("country")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
