@@ -12,4 +12,4 @@ FROM openjdk:8-jdk-slim
 COPY --from=build /target/giftcards-0.0.1-SNAPSHOT.jar giftcards-0.0.1-SNAPSHOT.jar
 # ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","giftcards-0.0.1-SNAPSHOT.jarr"]
+ENTRYPOINT ["java","-jar","giftcards-0.0.1-SNAPSHOT.jar"]
