@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import service.ricotunes.giftcards.serviceImpl.CustomUserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
         jsr250Enabled = true,
@@ -28,15 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsServiceImpl customUserDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-
-    //    @Autowired
-    public SecurityConfig(CustomUserDetailsServiceImpl customUserDetailsService,
-                          JwtAuthenticationEntryPoint unauthorizedHandler, JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -59,7 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
 
@@ -77,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 
 //	@Override
 //	public void configure(WebSecurity registry) {
