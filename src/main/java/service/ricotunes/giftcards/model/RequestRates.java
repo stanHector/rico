@@ -17,6 +17,7 @@ public class RequestRates {
     private String requestDate;
     private double quantity;
     private double amount;
+    private String rate;
     @Column
     @ElementCollection(targetClass=String.class)
     private List<String> imageList;

@@ -11,7 +11,7 @@ import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.service.WithdrawService;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/api/v1/")
 public class WalletTransactionController {

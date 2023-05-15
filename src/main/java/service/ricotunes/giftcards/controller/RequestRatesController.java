@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("api/v1/")
 public class RequestRatesController {
@@ -60,6 +60,7 @@ public class RequestRatesController {
                 .orElseThrow(() -> new ResourceNotFoundException("Request not found for this id: " + id));
         requestRates.setComment(requestRatesDto.getComment());
         requestRates.setAmount(requestRatesDto.getAmount());
+        requestRates.setRate(requestRatesDto.getRate());
         final RequestRates updatedRates = requestRateRepository.save(requestRates);
         return requestRateRepository.save(updatedRates);
     }

@@ -15,6 +15,7 @@ public class RequestRatesDto {
     private long id;
     private double quantity;
     private double amount;
+    private String rate;
     private String type;
     private String country;
     private String comment;

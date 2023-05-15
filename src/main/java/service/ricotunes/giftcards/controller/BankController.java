@@ -11,7 +11,7 @@ import service.ricotunes.giftcards.service.BankService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")
