@@ -13,7 +13,7 @@ import service.ricotunes.giftcards.service.WithdrawService;
 import java.util.List;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"https://ricogiftapp.netlify.app/"})
 @RestController
 @RequestMapping("/api/v1/")
 public class WalletTransactionController {

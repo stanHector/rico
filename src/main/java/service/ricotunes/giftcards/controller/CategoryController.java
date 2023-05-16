@@ -12,7 +12,8 @@ import service.ricotunes.giftcards.repository.CategoryRepository;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"https://ricogiftapp.netlify.app/"})
+//@CrossOrigin(origins = {"http://localhost:3000"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")

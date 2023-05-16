@@ -8,7 +8,7 @@ import service.ricotunes.giftcards.service.EmailsService;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"https://ricogiftapp.netlify.app/"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")

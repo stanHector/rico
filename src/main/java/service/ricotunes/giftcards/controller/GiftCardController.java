@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"https://ricogiftapp.netlify.app/"})
 @RestController
 @RequestMapping("/api/v1/")
 public class GiftCardController {
