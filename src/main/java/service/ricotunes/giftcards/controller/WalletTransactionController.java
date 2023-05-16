@@ -10,6 +10,8 @@ import service.ricotunes.giftcards.payload.response.Response;
 import service.ricotunes.giftcards.repository.WalletRepository;
 import service.ricotunes.giftcards.service.WithdrawService;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
@@ -17,6 +19,12 @@ import service.ricotunes.giftcards.service.WithdrawService;
 public class WalletTransactionController {
     private final WithdrawService withdrawService;
     private final WalletRepository walletRepository;
+
+
+    @GetMapping("withdrawals")
+    List<WalletTransactions> getAllWithdrawals(){
+        return withdrawService.getWithdraws();
+    }
 
     @PostMapping("wallet-transactions/{userId}")
     ResponseEntity<Object> createWithdraw(@PathVariable(value = "userId") Long userId, @RequestBody WalletTransactions walletTransactions) {
