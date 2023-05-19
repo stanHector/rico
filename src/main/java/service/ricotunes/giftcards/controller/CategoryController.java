@@ -22,7 +22,7 @@ public class CategoryController {
 
     @GetMapping("category")
     @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
-    ResponseEntity<?> getCategories() {
+    ResponseEntity<Object> getCategories() {
         return new ResponseEntity<>(categoryRepository.findAll(), HttpStatus.OK);
     }
 
