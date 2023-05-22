@@ -25,6 +25,7 @@ public class GiftCard {
     private double profit;
     private double rate;
     private double adminRate;
+    private String duration;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "giftCard_category",

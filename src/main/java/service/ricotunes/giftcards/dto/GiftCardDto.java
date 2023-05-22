@@ -10,4 +10,5 @@ public class GiftCardDto {
     private double rmbRate;
     private double cardRate;
     private double profit;
+    private String duration;
 }

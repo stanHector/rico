@@ -23,13 +23,14 @@ public class GiftCardController {
 
     private final GiftCardRepository giftCardRepository;
 
+    //get gift-cards
     @GetMapping("cards")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     List<GiftCard> getCards() {
         return giftCardRepository.findAll();
     }
 
-    //get card by Id
+    //Get card by Id
     @GetMapping("card/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GiftCard> getCardById(@PathVariable(value = "id") Long id)
@@ -40,28 +41,21 @@ public class GiftCardController {
         return ResponseEntity.ok().body(giftCard);
     }
 
-    //create a card
+    //Create a card
     @PostMapping("card")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
         double cardRate = giftCard.getCardRate();
         String denomination = giftCard.getCategory().getCategoryName();
-        System.out.println("Denomination:::: " + denomination);
-
         double adminRate = cardRate * giftCard.getRmbRate();
         double actualRate = adminRate - giftCard.getProfit();
-//        double roundedRate = Math.round(actualRate);
-        System.out.println("rate ::: " + actualRate);
-        System.out.println("admin Rate::" + adminRate);
-        System.out.println("Profit :: " + giftCard.getProfit());
         giftCard.setDenomination(denomination);
         giftCard.setRate(actualRate);
         giftCard.setAdminRate(adminRate);
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
-
-    //update a card
+    //Update a card
     @PutMapping("card/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public GiftCard updateCard(@PathVariable("id") Long id, @Valid @RequestBody GiftCardDto giftCardDto) throws ResourceNotFoundException {
@@ -73,13 +67,14 @@ public class GiftCardController {
         giftcard.setCardRate(giftCardDto.getCardRate());
         giftcard.setRmbRate(giftCardDto.getRmbRate());
         giftcard.setProfit(giftCardDto.getProfit());
+        giftcard.setDuration(giftCardDto.getDuration());
         giftcard.setDenomination(giftcard.getCategory().getCategoryName());
         final GiftCard updatedGiftCard = giftCardRepository.save(giftcard);
         System.out.println("Updated Card " + updatedGiftCard);
         return giftCardRepository.save(updatedGiftCard);
     }
 
-    //delete card
+    //Delete card
     @DeleteMapping("card/{id}")
     @PreAuthorize(" hasRole('ADMIN')")
     public Map<String, Boolean> deleteCard(@PathVariable(value = "id") Long id)
